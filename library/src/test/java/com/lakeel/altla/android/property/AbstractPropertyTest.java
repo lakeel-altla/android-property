@@ -24,11 +24,14 @@ public final class AbstractPropertyTest {
             }
         };
 
-        final MockOnValueChangedListener listener = new MockOnValueChangedListener();
-        property.addOnValueChangedListener(listener);
+        final MockOnValueChangedListener listener1 = new MockOnValueChangedListener();
+        final MockOnValueChangedListener listener2 = new MockOnValueChangedListener();
+        property.addOnValueChangedListener(listener1);
+        property.addOnValueChangedListener(listener2);
         property.raiseOnValueChanged();
 
-        assertTrue(listener.invoked);
+        assertTrue(listener1.invoked);
+        assertTrue(listener2.invoked);
     }
 
     @Test
@@ -45,12 +48,16 @@ public final class AbstractPropertyTest {
             }
         };
 
-        final MockOnValueChangedListener listener = new MockOnValueChangedListener();
-        property.addOnValueChangedListener(listener);
-        property.removeOnValueChangedListener(listener);
+        final MockOnValueChangedListener listener1 = new MockOnValueChangedListener();
+        final MockOnValueChangedListener listener2 = new MockOnValueChangedListener();
+        property.addOnValueChangedListener(listener1);
+        property.addOnValueChangedListener(listener2);
+        property.removeOnValueChangedListener(listener1);
+        property.removeOnValueChangedListener(listener2);
         property.raiseOnValueChanged();
 
-        assertFalse(listener.invoked);
+        assertFalse(listener1.invoked);
+        assertFalse(listener2.invoked);
     }
 
     @Test
@@ -67,12 +74,15 @@ public final class AbstractPropertyTest {
             }
         };
 
-        final MockOnValueChangedListener listener = new MockOnValueChangedListener();
-        property.addOnValueChangedListener(listener);
+        final MockOnValueChangedListener listener1 = new MockOnValueChangedListener();
+        final MockOnValueChangedListener listener2 = new MockOnValueChangedListener();
+        property.addOnValueChangedListener(listener1);
+        property.addOnValueChangedListener(listener2);
         property.clearOnValueChangedListeners();
         property.raiseOnValueChanged();
 
-        assertFalse(listener.invoked);
+        assertFalse(listener1.invoked);
+        assertFalse(listener2.invoked);
     }
 
     private final class MockOnValueChangedListener implements Property.OnValueChangedListener {
