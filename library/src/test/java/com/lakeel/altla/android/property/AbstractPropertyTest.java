@@ -53,6 +53,28 @@ public final class AbstractPropertyTest {
         assertFalse(listener.invoked);
     }
 
+    @Test
+    public void clearOnValueChangedListeners() {
+        final AbstractProperty property = new AbstractProperty() {
+            @Nullable
+            @Override
+            public Object getValue() {
+                return null;
+            }
+
+            @Override
+            public void setValue(@Nullable Object value) {
+            }
+        };
+
+        final MockOnValueChangedListener listener = new MockOnValueChangedListener();
+        property.addOnValueChangedListener(listener);
+        property.clearOnValueChangedListeners();
+        property.raiseOnValueChanged();
+
+        assertFalse(listener.invoked);
+    }
+
     private final class MockOnValueChangedListener implements Property.OnValueChangedListener {
 
         private boolean invoked;
